@@ -8,9 +8,6 @@ var picNames = ['bagPic' , 'bananaPic' , 'bathroomPic' , 'bootsPic' , 'breakfast
                    'penPic' , 'petPic' , 'scissorsPic' , 'sharkPic' , 'sweepPic' , 'taunPic' , 'unicornPic' , 'usbPic' , 'canPic' , 'winePic'];
 var allInfo = [];
 var picSection = document.getElementById('picSection');
-var pic1 = document.getElementById('pic1');
-var pic2 = document.getElementById('pic2');
-var pic3 = document.getElementById('pic3');
 
 function Picture(name, path) {
     this.name = name;
@@ -19,23 +16,11 @@ function Picture(name, path) {
     
 }
 
-Picture.prototype.render1 = function(){
-    pic1.src = this.path;
-    pic1.alt = this.name;
-}
-
-Picture.prototype.render2 = function(){
-    pic2.src = this.path;
-    pic2.alt = this.name;
-}
-
-Picture.prototype.render3 = function(){
-    pic3.src = this.path;
-    pic3.alt = this.name;
-}
-
-Picture.prototype.addCounter = function(){
-    this.clickCount++;
+Picture.prototype.render = function(){
+    var newLI = document.createElement('li');
+    newLI.id = this.name
+    newLI.innerHTML = '<img src=' + this.path + ' alt=' + this.name + '>';
+    picSection.appendChild(newLI);
 }
 
 var createStateOne = function(){
@@ -43,26 +28,47 @@ var createStateOne = function(){
        var newName = picNames[i];
     var newName = new Picture(picNames[i] , picPaths[i]);
     newName.clickCount = 0;
+    newName.showCount = 0;
+    newName.checkState = true;
    }
 };
 
 var flashRandom = function(){
-        var randomNumber1 = Math.floor(Math.random() * 20);
-        var randomNumber2 = Math.floor(Math.random() * 20);
-        var randomNumber3 = Math.floor(Math.random() * 20);
-        allInfo[randomNumber1].render1();
-        allInfo[randomNumber2].render2();
-        allInfo[randomNumber3].render3();
-    
+    picSection.innerHTML = '';
+    for(var i = 0; i < 3; i++){
+        var randomNumber = Math.floor(Math.random() * 20);
+        allInfo[randomNumber].render();
+        allInfo[randomNumber].showCount++;
+        allInfo[randomNumber].checkState = false;
+    } 
 };
 
+var showAll = function(){
+    for(var i = 0; i < allInfo.length; i++){
+        
+    }
+}
+
 picSection.addEventListener('click' , (event) => {
-    flashRandom();
-    countDown--;
-    console.log(event.target);
+   if(countDown === 0){
+       picSection.removeEventListener('click' , event);
+   } else {
+            countDown--;
+            var x = event.target.alt;
+            for(var i = 0; i < allInfo.length; i++){
+                if(x === allInfo[i].name){
+                    allInfo[i].clickCount++;
+                }
+            }
+        
+        flashRandom();
+        }
     console.log(countDown);
-    console.log(event.target.src);
-    console.log(event.target.name)
+    console.log(event.target);
+    console.log(x);
+    console.log(allInfo[x]);
+    
 });
 
 createStateOne();
+flashRandom();
