@@ -45,6 +45,7 @@ var flashRandom = function(){
             allInfo[randomNumber].showCount++;
             allInfo[randomNumber].checkState = false;
             stopRendering++;
+            console.log(allInfo[randomNumber].name);
             } 
 
         if(stopRendering === 3){
@@ -76,6 +77,7 @@ picSection.addEventListener('click' , (event) => {
         resetFlash = 0;
         
     }else{
+        console.log(countDown);
         countDown--;
         resetFlash++; 
         var x = event.target.alt;
