@@ -14,14 +14,14 @@ function Picture(name, path) {
     this.path = path;
     allInfo.push(this);
     
-}
+};
 
 Picture.prototype.render = function(){
     var newLI = document.createElement('li');
     newLI.id = this.name
     newLI.innerHTML = '<img src=' + this.path + ' alt=' + this.name + '>';
     picSection.appendChild(newLI);
-}
+};
 
 var createStateOne = function(){
    for (var i = 0; i < picNames.length; i++){
@@ -35,23 +35,39 @@ var createStateOne = function(){
 
 var flashRandom = function(){
     picSection.innerHTML = '';
-    for(var i = 0; i < 3; i++){
+    var stopRendering = 0;
+
+    for(var i = 0; i < allInfo.length; i++){
         var randomNumber = Math.floor(Math.random() * 20);
-        allInfo[randomNumber].render();
-        allInfo[randomNumber].showCount++;
-        allInfo[randomNumber].checkState = false;
-    } 
+        if(allInfo[randomNumber].checkState === true){
+            allInfo[randomNumber].render();
+            allInfo[randomNumber].showCount++;
+            allInfo[randomNumber].checkState = false;
+            stopRendering++;
+            } 
+        if(stopRendering === 3){
+            break;
+        }
+    }
+
+    for(var j = 0; j < allInfo.length; j++){
+        allInfo[j].checkState = true;
+    }
 };
 
 var showAll = function(){
     for(var i = 0; i < allInfo.length; i++){
-        
+        var finalLI = document.createElement('li');
+        finalLI.textContent = allInfo[i].name + ' was clicked ' + allInfo[i].clickCount + " times and was shown " + allInfo[i].showCount + ' times.';
+        reportSection.appendChild(finalLI);
     }
-}
+};
 
 picSection.addEventListener('click' , (event) => {
    if(countDown === 0){
        picSection.removeEventListener('click' , event);
+       alert('Thanks for playing. See Sam for a free carton of cigarettes.');
+       showAll();
    } else {
             countDown--;
             var x = event.target.alt;
@@ -60,14 +76,9 @@ picSection.addEventListener('click' , (event) => {
                     allInfo[i].clickCount++;
                 }
             }
-        
-        flashRandom();
+            flashRandom();
         }
-    console.log(countDown);
-    console.log(event.target);
-    console.log(x);
-    console.log(allInfo[x]);
-    
+  
 });
 
 createStateOne();
