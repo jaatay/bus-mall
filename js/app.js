@@ -65,6 +65,10 @@ var introFunction = () =>{
 }
 
 //Show end list function
+//local storage function at end of showAll
+var localStorageTest = [1, 2, 3, 4];
+JSON.stringify(localStorageTest);
+localStorage.setItem(l)
 var showAll = () =>{
 picSection.style.display = 'none';
 
@@ -127,6 +131,6 @@ picSection.addEventListener('click' , (event) => {
 });
 
 //Set state one
-introFunction();
+// introFunction();
 createStateOne();
 flashRandom();
