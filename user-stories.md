@@ -5,9 +5,11 @@ As a user
 -Be presented a list of items to choose from by clicking
 -Have an intuitive UI experience when navigating or performing actions on the site
 
+
 As a client advertiser
--Site gathers appropriate analytics for data collection
-    -Products vote list and percentages
+-Site gathers appropriate analytics for data collection from user interaction
+-Site produces a chart to show voter tendencies
+-Site uses some kind persistence method to continue gathering data beyond one session (storage)
 -Gathered data is visually displayed in a way that is easy to read and ascertain what is being presented, to be useful for an add campaign
 
 As a developer

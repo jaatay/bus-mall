@@ -1,5 +1,5 @@
 * {
-    border: 2px solid black;
+    border: 2px solid orange;
 }
 
 header {
@@ -8,6 +8,7 @@ header {
     background: linear-gradient(black , #4d9900);
     font-size: 2em;
     color: #ffff00;
+    justify-content: bottom;
 }
 
 h1 {
