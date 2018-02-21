@@ -64,14 +64,28 @@ var introFunction = () =>{
     intro.innerHTML = `Welcome, ${myName}!`;
 }
 
-//Show end list function
-//local storage function at end of showAll
-var localStorageTest = [1, 2, 3, 4];
-JSON.stringify(localStorageTest);
-localStorage.setItem(l)
+//localStorage functions
+var storeThis = function(){
+    for (var i = 0; i <allInfo.length; i++){
+        allClicks.push(allInfo[i].clickCount);
+    }
+    console.log(allClicks);
+    localStorage.setItem('clickInfo' , JSON.stringify(allClicks));
+    console.log(allClicks);
+};
+
+var getThis = function(){
+    var newClicks = localStorage.getItem('clickInfo');
+        if (newClicks){
+            allClicks = JSON.parse(newClicks);
+            console.log(allClicks);
+        }
+};
+
+//show end chart and store clicks function
 var showAll = () =>{
 picSection.style.display = 'none';
-
+storeThis();
 //Chart
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -123,7 +137,7 @@ picSection.addEventListener('click' , (event) => {
         for(var i = 0; i < allInfo.length; i++){
             if(x === allInfo[i].name){
                 allInfo[i].clickCount++;
-                allClicks.push(allInfo[i].clickCount);
+               
             }
         }
         flashRandom();
@@ -132,5 +146,8 @@ picSection.addEventListener('click' , (event) => {
 
 //Set state one
 // introFunction();
+window.onload = function(){
+    getThis();
+}
 createStateOne();
 flashRandom();
