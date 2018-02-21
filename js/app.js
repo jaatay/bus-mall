@@ -6,11 +6,14 @@ var resetFlash = 0;
 var picPaths = ['img/bag.jpg' , 'img/banana.jpg' , 'img/bathroom.jpg' , 'img/boots.jpg' ,'img/breakfast.jpg' , 'img/bubblegum.jpg' , 'img/chair.jpg' , 'img/cthulhu.jpg' , 'img/dog-duck.jpg' , 'img/dragon.jpg' , 'img/pen.jpg' , 'img/pet-sweep.jpg' , 'img/scissors.jpg' , 'img/shark.jpg','img/sweep.png' , 'img/tauntaun.jpg' , 'img/unicorn.jpg' , 'img/usb.gif' , 'img/water-can.jpg' , 'img/wine-glass.jpg'];
 var picNames = ['bagPic' , 'bananaPic' , 'bathroomPic' , 'bootsPic' , 'breakfastPic' , 'bubblePic' , 'chairPic' , 'demonPic' , 'dogPic' , 'dragonPic','penPic' , 'petPic' , 'scissorsPic' , 'sharkPic' , 'sweepPic' , 'taunPic' , 'unicornPic' , 'usbPic' , 'canPic' , 'winePic'];
 var allInfo = [];
+var allShows = [];
+var allClicks = [];
 var picSection = document.getElementById('picSection');
+var intro = document.getElementById('introPara');
 var ctx = document.getElementById('myChart');
 
 //Constructor and render method
-function Picture(name, path) {
+function Picture(name, path){
     this.name = name;
     this.path = path;
     allInfo.push(this);
@@ -24,7 +27,7 @@ Picture.prototype.render = function(){
 };
 
 //Initial instance creation
-var createStateOne = function(){
+var createStateOne = () =>{
    for (var i = 0; i < picNames.length; i++){
         var newName = picNames[i];
         var newName = new Picture(picNames[i] , picPaths[i]);
@@ -35,7 +38,7 @@ var createStateOne = function(){
 };
 
 //Random pic function
-var flashRandom = function(){
+var flashRandom = () =>{
     picSection.innerHTML = '';
     var stopRendering = 0;
 
@@ -44,6 +47,7 @@ var flashRandom = function(){
         if(allInfo[randomNumber].checkState === true){
             allInfo[randomNumber].render();
             allInfo[randomNumber].showCount++;
+            allShows.push(allInfo[randomNumber].showCount);
             allInfo[randomNumber].checkState = false;
             stopRendering++;
             console.log(allInfo[randomNumber].name);
@@ -55,37 +59,31 @@ var flashRandom = function(){
     }
 };
 
+var introFunction = () =>{
+    var myName = prompt('What is your name?');
+    intro.innerHTML = `Welcome, ${myName}!`;
+}
+
 //Show end list function
-var showAll = function(){
-    for(var i = 0; i < allInfo.length; i++){
-        var finalLI = document.createElement('li');
-        finalLI.textContent = allInfo[i].name + ' was clicked ' + allInfo[i].clickCount + " times and was shown " + allInfo[i].showCount + ' times.';
-        reportSection.appendChild(finalLI);
+var showAll = () =>{
+picSection.style.display = 'none';
+
 //Chart
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: picNames,
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+            data: allClicks,
+            backgroundColor: ['#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000'
             ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+            borderColor: ['#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000'
             ],
-            borderWidth: 1
+            borderWidth: 1,
+            barPercentage: .5,
+            categoryPercentage: .5,
+            hoverBackgroundColor: '#FFFFFF'
         }]
     },
     options: {
@@ -98,7 +96,6 @@ var myChart = new Chart(ctx, {
         }
     }
 });
-    }
 };
 
 //Click event listener
@@ -122,15 +119,14 @@ picSection.addEventListener('click' , (event) => {
         for(var i = 0; i < allInfo.length; i++){
             if(x === allInfo[i].name){
                 allInfo[i].clickCount++;
+                allClicks.push(allInfo[i].clickCount);
             }
         }
         flashRandom();
         } 
 });
 
-
-
-
 //Set state one
+introFunction();
 createStateOne();
 flashRandom();
