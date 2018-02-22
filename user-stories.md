@@ -4,6 +4,7 @@ As a user
 -Have clearly explained directions on the task
 -Be presented a list of items to choose from by clicking
 -Have an intuitive UI experience when navigating or performing actions on the site
+-Recieve feedback while performing the tasks and after completion
 
 
 As a client advertiser

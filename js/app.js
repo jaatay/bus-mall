@@ -11,6 +11,7 @@ var allClicks = [];
 var allClicksNew = [];
 var picSection = document.getElementById('picSection');
 var intro = document.getElementById('introPara');
+var introBlurb = document.getElementById('introBlurb');
 var ctx = document.getElementById('myChart');
 var myName = '';
 
@@ -68,7 +69,6 @@ var introFunction = () =>{
 
 //localStorage functions
 var storeThis = () =>{
-    
     for (var i = 0; i <allInfo.length; i++){
         allClicks.push(allInfo[i].clickCount);
         }
@@ -80,20 +80,22 @@ var storeThis = () =>{
 
 var getThis = () =>{
     var newClicks = localStorage.getItem('clickInfo');
-       myName = localStorage.getItem('userName');
-    if (newClicks){
-        allClicks = [];
-        newClicks = JSON.parse(newClicks);
-        console.log(newClicks);
-        myName = JSON.parse(myName);
-        intro.innerHTML = `Welcome back, ${myName}`;
+        myName = localStorage.getItem('userName');
 
-        for (var i = 0; i < allInfo.length; i++){
-            allInfo[i].clickCount = newClicks[i];
-        } 
+    if(newClicks){
+            allClicks = [];
+            newClicks = JSON.parse(newClicks);
+            console.log(newClicks);
+            myName = JSON.parse(myName);
+            intro.innerHTML = `Welcome back, ${myName}`;
+            introBlurb.innerHTML = "You know what to do by now.";
+
+            for (var i = 0; i < allInfo.length; i++){
+                allInfo[i].clickCount = newClicks[i];
+            } 
 
     } else {
-        introFunction();
+            introFunction();
     }
     
 };
@@ -163,5 +165,4 @@ picSection.addEventListener('click' , (event) => {
 //Set state one
 createStateOne();
 getThis();
-
 flashRandom();
