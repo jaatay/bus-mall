@@ -85,14 +85,13 @@ var getThis = () =>{
         allClicks = [];
         newClicks = JSON.parse(newClicks);
         console.log(newClicks);
-         myName = JSON.parse(myName);
-
+        myName = JSON.parse(myName);
         intro.innerHTML = `Welcome back, ${myName}`;
 
-    
         for (var i = 0; i < allInfo.length; i++){
             allInfo[i].clickCount = newClicks[i];
         } 
+
     } else {
         introFunction();
     }
