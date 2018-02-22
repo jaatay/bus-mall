@@ -8,9 +8,11 @@ var picNames = ['bagPic' , 'bananaPic' , 'bathroomPic' , 'bootsPic' , 'breakfast
 var allInfo = [];
 var allShows = [];
 var allClicks = [];
+var allClicksNew = [];
 var picSection = document.getElementById('picSection');
 var intro = document.getElementById('introPara');
 var ctx = document.getElementById('myChart');
+var myName = '';
 
 //Constructor and render method
 function Picture(name, path){
@@ -60,32 +62,48 @@ var flashRandom = () =>{
 };
 
 var introFunction = () =>{
-    var myName = prompt('What is your name?');
+    myName = prompt('What is your name?');
     intro.innerHTML = `Welcome, ${myName}!`;
 }
 
 //localStorage functions
-var storeThis = function(){
+var storeThis = () =>{
+    
     for (var i = 0; i <allInfo.length; i++){
         allClicks.push(allInfo[i].clickCount);
-    }
-    console.log(allClicks);
+        }
+    
     localStorage.setItem('clickInfo' , JSON.stringify(allClicks));
+    localStorage.setItem('userName' , JSON.stringify(myName));
     console.log(allClicks);
 };
 
-var getThis = function(){
+var getThis = () =>{
     var newClicks = localStorage.getItem('clickInfo');
-        if (newClicks){
-            allClicks = JSON.parse(newClicks);
-            console.log(allClicks);
-        }
+       myName = localStorage.getItem('userName');
+    if (newClicks){
+        allClicks = [];
+        newClicks = JSON.parse(newClicks);
+        console.log(newClicks);
+         myName = JSON.parse(myName);
+
+        intro.innerHTML = `Welcome back, ${myName}`;
+
+    
+        for (var i = 0; i < allInfo.length; i++){
+            allInfo[i].clickCount = newClicks[i];
+        } 
+    } else {
+        introFunction();
+    }
+    
 };
 
 //show end chart and store clicks function
 var showAll = () =>{
 picSection.style.display = 'none';
 storeThis();
+
 //Chart
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -137,7 +155,6 @@ picSection.addEventListener('click' , (event) => {
         for(var i = 0; i < allInfo.length; i++){
             if(x === allInfo[i].name){
                 allInfo[i].clickCount++;
-               
             }
         }
         flashRandom();
@@ -145,9 +162,7 @@ picSection.addEventListener('click' , (event) => {
 });
 
 //Set state one
-// introFunction();
-window.onload = function(){
-    getThis();
-}
 createStateOne();
+getThis();
+
 flashRandom();
