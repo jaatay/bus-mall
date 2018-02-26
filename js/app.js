@@ -1,7 +1,7 @@
 'use strict'
 
 //Global
-var countDown = 25;
+var countDown = 24;
 var resetFlash = 0;
 var picPaths = ['img/bag.jpg' , 'img/banana.jpg' , 'img/bathroom.jpg' , 'img/boots.jpg' ,'img/breakfast.jpg' , 'img/bubblegum.jpg' , 'img/chair.jpg' , 'img/cthulhu.jpg' , 'img/dog-duck.jpg' , 'img/dragon.jpg' , 'img/pen.jpg' , 'img/pet-sweep.jpg' , 'img/scissors.jpg' , 'img/shark.jpg','img/sweep.png' , 'img/tauntaun.jpg' , 'img/unicorn.jpg' , 'img/usb.gif' , 'img/water-can.jpg' , 'img/wine-glass.jpg'];
 var picNames = ['bagPic' , 'bananaPic' , 'bathroomPic' , 'bootsPic' , 'breakfastPic' , 'bubblePic' , 'chairPic' , 'demonPic' , 'dogPic' , 'dragonPic','penPic' , 'petPic' , 'scissorsPic' , 'sharkPic' , 'sweepPic' , 'taunPic' , 'unicornPic' , 'usbPic' , 'canPic' , 'winePic'];
@@ -53,7 +53,6 @@ var flashRandom = () =>{
             allShows.push(allInfo[randomNumber].showCount);
             allInfo[randomNumber].checkState = false;
             stopRendering++;
-            console.log(allInfo[randomNumber].name);
             } 
 
         if(stopRendering === 3){
@@ -75,7 +74,6 @@ var storeThis = () =>{
     
     localStorage.setItem('clickInfo' , JSON.stringify(allClicks));
     localStorage.setItem('userName' , JSON.stringify(myName));
-    console.log(allClicks);
 };
 
 var getThis = () =>{
@@ -85,7 +83,6 @@ var getThis = () =>{
     if(newClicks){
             allClicks = [];
             newClicks = JSON.parse(newClicks);
-            console.log(newClicks);
             myName = JSON.parse(myName);
             intro.innerHTML = `Welcome back, ${myName}`;
             introBlurb.innerHTML = "You know what to do by now.";
@@ -149,7 +146,6 @@ picSection.addEventListener('click' , (event) => {
         resetFlash = 0;
         
     }else{
-        console.log(countDown);
         countDown--;
         resetFlash++; 
         var x = event.target.alt;
